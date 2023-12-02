@@ -4,15 +4,66 @@ const inputString = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green Game
 const cleanedString = inputString.replace(/Game \d/g, '');
 
 //turn string into array
-//the first game is empty, so array index corresponds with game number
+//the first is empty, so array index corresponds with game number
 function stringToArray(string, d1, d2, d3) {
-    return string.split(d1).map(function(x) {
-        return x.split(d2).map(function(y) {
+    return string.split(d1).map(function (x) {
+        return x.split(d2).map(function (y) {
             return y.split(d3);
         });
     });
 }
 
+// init cleaned array
 let ballArray = stringToArray(cleanedString, ":", ";", ",");
 
-console.log(ballArray)
+// init new array
+let ballTotalArray = [];
+
+// look through array and create new one with ball totals in
+function addBalls(arr) {
+
+
+    for (let i = 0; i < arr.length; i++) {
+
+        let blue = 0;
+        let red = 0;
+        let green = 0;
+
+        for (let j = 0; j < arr[i].length; j++) {
+
+            for (let k = 0; k < arr[i][j].length; k++) {
+
+                // if contains colour, add that digit
+                if (arr[i][j][k].includes("red")) {
+                    red += Number(arr[i][j][k].match(/\d+/g))
+                }
+
+                if (arr[i][j][k].includes("blue")) {
+                    blue += Number(arr[i][j][k].match(/\d+/g))
+                }
+
+                if (arr[i][j][k].includes("green")) {
+                    green += Number(arr[i][j][k].match(/\d+/g))
+                }
+            }
+        }
+
+        console.log("red " + red)
+        console.log("blue " + blue)
+        console.log("green " + green)
+
+    }
+}
+
+addBalls(ballArray)
+
+// function stringThing(str) {
+//     console.log(Number(str.match(/\d/)))
+// }
+
+// stringThing(" 3 blue");
+
+// console.log(ballArray[1][0])
+
+
+
