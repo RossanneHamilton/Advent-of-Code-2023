@@ -1,51 +1,63 @@
 const inputString = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
 
-let basicArr = arrayFromString(inputString)
+// Delete all instances of "Game x" in the string
+const cleanedString = inputString.replace(/Game \d/g, '');
 
-function arrayFromString(str) {
-    return str.split(/(?=Game \d+:)/);
+// Turn string into array
+function stringToArray(string, d1, d2, d3) {
+    return string.split(d1).map(function (x) {
+        return x.split(d2).map(function (y) {
+            return y.split(d3);
+        });
+    });
 }
 
-console.log("basic arr is " + basicArr)
+// Initialize cleaned array
+let ballArray = stringToArray(cleanedString, ":", ";", ",");
 
-function SplitIt(str)
-{
-    let myArr=stringTo2dArray(str,/(?=Game \d+: )/,";");
+// Initialize new array
+let ballTotalArray = [];
 
-    for(var i=0;i<myArr.length;i++)
-    {
-        for(var j=0;j<myArr[i].length;j++)
-        {
-         
-            // console.log(myArr[i][j]);
+// Look through array and create a new one with ball totals
+function addBalls(arr) {
+    let ballTotalArray = [];
+    for (let i = 0; i < arr.length; i++) {
+        let blue = 0;
+        let red = 0;
+        let green = 0;
+        for (let j = 0; j < arr[i].length; j++) {
+            for (let k = 0; k < arr[i][j].length; k++) {
+                if (arr[i][j][k].includes("red")) {
+                    red += Number(arr[i][j][k].match(/\d+/g)[0]);
+                }
+                if (arr[i][j][k].includes("blue")) {
+                    blue += Number(arr[i][j][k].match(/\d+/g)[0]);
+                }
+                if (arr[i][j][k].includes("green")) {
+                    green += Number(arr[i][j][k].match(/\d+/g)[0]);
+                }
+            }
         }
+        ballTotalArray.push([red, green, blue]); // Push the sums of colors to ballTotalArray
     }
+    return ballTotalArray;
 }
 
-function stringTo2dArray(string, d1, d2) {
-    return string.split(d1).map(function(x){return x.split(d2)});
+// Compare amounts in arrays
+function isHigherOrEqual(dataArr, questionArr) {
+    let answerArray = [];
+    for (let i = 0; i < dataArr.length; i++) {
+        let isPossible = true; // Initialize isPossible as true
+        for (let j = 0; j < dataArr[i].length; j++) {
+            if (dataArr[i][j] > questionArr[j]) {
+                isPossible = false;
+                break; // Break the loop if any element is less than the corresponding element in questionArr
+            }
+        }
+        answerArray.push([i, isPossible]);
+    }
+    console.log(answerArray);
 }
 
-function splitArr(arr) {
-    let newArr = []
-    console.log("basic array:");
-    for(var i=0;i<basicArr.length;i++)
-    {
-       
-        console.log(basicArr[i].replace(/(?=Game \d+:)/,"")+ " "+i+"-------");
-    }
-    console.log("----end basic array");
-    for (var i = 0; i < arr.length; i++) {
-        line = basicArr[i].split(':');
-        newArr.push(line);
-        console.log(line);
-    }
-
-    // console.log("New Arr is " + newArr)
-}
-SplitIt(inputString);
-
-console.log("basic: "+ basicArr);
-
-splitArr(basicArr);
-
+let dataArr = addBalls(ballArray);
+isHigherOrEqual(dataArr, [12, 13, 14]);
