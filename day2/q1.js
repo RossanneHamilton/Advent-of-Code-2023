@@ -61,14 +61,17 @@ function isHigherOrEqual(dataArr, questionArr) {
 
 // loop through the resultsArray. If true, add the number in that array
 function q1Answer(arr) {
+  let sum = 0;
+  
   for (let i = 0; i < dataArr.length; i++) {
     if (arr[i][1] === true) {
-      console.log("It's true");
+      sum += arr[i][0];
     }
   }
+  
+  return sum
 }
 
 let dataArr = addBalls(ballArray);
 let resultsArray = isHigherOrEqual(dataArr, [12, 13, 14]);
-q1Answer(resultsArray)
-// console.log(resultsArray) 
+console.log(q1Answer(resultsArray)) 
