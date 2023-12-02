@@ -56,8 +56,19 @@ function isHigherOrEqual(dataArr, questionArr) {
         }
         answerArray.push([i, isPossible]);
     }
-    console.log(answerArray);
+    return answerArray;
+}
+
+// loop through the resultsArray. If true, add the number in that array
+function q1Answer(arr) {
+  for (let i = 0; i < dataArr.length; i++) {
+    if (arr[i][1] === true) {
+      console.log("It's true");
+    }
+  }
 }
 
 let dataArr = addBalls(ballArray);
-isHigherOrEqual(dataArr, [12, 13, 14]);
+let resultsArray = isHigherOrEqual(dataArr, [12, 13, 14]);
+q1Answer(resultsArray)
+// console.log(resultsArray) 
