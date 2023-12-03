@@ -4,27 +4,25 @@
 
 let charInLine = 10;
 //line breaks and white spaces removed already
-let input = "467..114....35..633.617*...........+.58...592...........755..664.598..";
+let input = "467..114.. ..35..633. 617*...... .....+.58. ..592..... ......755. .664.598..";
 let symbolPosition = [];
+let inputArr = input.split(" ")
 
-function findSymbolPosition(str) {
+console.log(inputArr)
+
+function findSymbolPosition(arr) {
     let lineNo;
     let positionNo;
 
-    //find line and save in var for array
-    for (let i = 0; i < str.length; i++) {
-        
-        //unless 0-9 get first char of i and then plus 1. THIS WILL CHANGE WITH BIGGER DATASET
-        if(i < 10) {
-            lineNo = 1;
-        } else {
-            stringNo = (String(i).match(/\d/)[0])
-            lineNo = Number(stringNo) + 1
-        }
-            
-        //find position in line and save in var for array
-        
+    for (let i = 0; i < arr.length; i++) {
+        lineNo = i+1;
+        console.log("line number: " + lineNo)
+
+        for (let i = 0; i < arr.length; i++) {
+            positionNo = i+1;
+            console.log("positionNo: " + positionNo)
+        };
     };
 }
 
-findSymbolPosition(input)
+findSymbolPosition(inputArr)
