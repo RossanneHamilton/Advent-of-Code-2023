@@ -32,7 +32,7 @@ function checkSymbolPosition(arr) {
 
             // for each one, check if it's a digit
             if (!isNaN(arr[i][j])) {
-                // console.log(arr[i][j])
+                console.log(arr[i][j])
 
                 //TODO
                 // if it's a digit, check if next to a symbol
@@ -44,7 +44,7 @@ function checkSymbolPosition(arr) {
                      for (let j2 = 0; j2 < arr[i2].length; j2++) {
 
                         if (specialCharsRegex.test(arr[i2][j2])) {
-                            // console.log(arr[i2][j2] + " is a symbol at line: " + arr[i][1] + " and position: " + arr[i][2])
+                            console.log(arr[i2][j2] + " is a symbol at line: " + arr[i][1] + " and position: " + arr[i][2])
                         }
                      }
                  }
@@ -56,5 +56,3 @@ function checkSymbolPosition(arr) {
 
 findSymbolPosition(inputArr)
 checkSymbolPosition(symbolPosition)
-
-console.log(symbolPosition)
