@@ -32,8 +32,9 @@ function checkSymbolPosition(arr) {
 
             // for each one, check if it's a digit
             if (!isNaN(arr[i][0])) {
-                console.log("Looping through: " + arr[i][0] + ", line: " + arr[i][1] + " position: " + arr[i][1])
+                console.log("Looping through: " + arr[i][0] + ", line: " + arr[i][1] + " position: " + arr[i][2])
                 console.log("The var to the right is: " + arr[i+1][0])
+                // console.log("The var to the left is: " + arr[i-1][0])
 
                 // loop through symbolPosition array again to find all symbols
                  for (let i2 = 0; i2 < arr.length; i2++) {
