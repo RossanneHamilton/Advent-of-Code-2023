@@ -39,12 +39,11 @@ function checkSymbolPosition(arr) {
                 // loop through symbolPosition array again, and use [i][j] to check positions
 
                  for (let i2 = 0; i2 < arr.length; i2++) {
-                    // console.log(arr[i2])
 
                      for (let j2 = 0; j2 < arr[i2].length; j2++) {
 
                         if (specialCharsRegex.test(arr[i2][j2])) {
-                            console.log(arr[i2][j2] + " is a symbol at line: " + arr[i][1] + " and position: " + arr[i][2])
+                            console.log(arr[i2][j2] + " is a symbol at line: " + arr[i2][1] + " and position: " + arr[i2][2])
                         }
                      }
                  }
