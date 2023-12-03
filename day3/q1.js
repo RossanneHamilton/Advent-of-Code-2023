@@ -4,7 +4,7 @@
 
 let charInLine = 10;
 //line breaks and white spaces removed already
-let input = "467..114.. ..35..633. 617*...... .....+.58. ..592..... ......755. .664.598..";
+let input = "467..114.. ...*...... ..35..633. ......#... 617*...... .....+.58. ..592..... ......755. ...$.*.... .664.598..";
 let symbolPosition = [];
 let inputArr = input.split(" ")
 
@@ -23,6 +23,7 @@ function findSymbolPosition(arr) {
 }
 
 function checkSymbolPosition(arr) {
+    let specialCharsRegex = /[*@#$+%/&=-]/;
 
     // loop through the symbolPosition array
     for (let i = 0; i < arr.length; i++) {
@@ -31,11 +32,23 @@ function checkSymbolPosition(arr) {
 
             // for each one, check if it's a digit
             if (!isNaN(arr[i][j])) {
-                console.log(arr[i][j] + " is a number")
+                // console.log(arr[i][j])
+
+                //TODO
+                // if it's a digit, check if next to a symbol
+                // loop through symbolPosition array again, and use [i][j] to check positions
+
+                 for (let i2 = 0; i2 < arr.length; i2++) {
+                    // console.log(arr[i2])
+
+                     for (let j2 = 0; j2 < arr[i2].length; j2++) {
+
+                        if (specialCharsRegex.test(arr[i2][j2])) {
+                            // console.log(arr[i2][j2] + " is a symbol at line: " + arr[i][1] + " and position: " + arr[i][2])
+                        }
+                     }
+                 }
             }
-
-            // if it's a digit, check if next to a symbol
-
         };
     };
         
@@ -43,3 +56,5 @@ function checkSymbolPosition(arr) {
 
 findSymbolPosition(inputArr)
 checkSymbolPosition(symbolPosition)
+
+console.log(symbolPosition)
