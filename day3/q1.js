@@ -22,4 +22,24 @@ function findSymbolPosition(arr) {
     };
 }
 
+function checkSymbolPosition(arr) {
+
+    // loop through the symbolPosition array
+    for (let i = 0; i < arr.length; i++) {
+
+        for (let j = 0; j < arr[i].length; j++) {
+
+            // for each one, check if it's a digit
+            if (!isNaN(arr[i][j])) {
+                console.log(arr[i][j] + " is a number")
+            }
+
+            // if it's a digit, check if next to a symbol
+
+        };
+    };
+        
+}
+
 findSymbolPosition(inputArr)
+checkSymbolPosition(symbolPosition)
