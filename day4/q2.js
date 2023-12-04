@@ -18,6 +18,22 @@ function findMatchingNumbers(cards) {
             //find numbers of all winning cards, and how many matching numbers they had
             console.log("Card no: " + (i + 1) + " had " + matches.length);
 
+
+            
+            //find the numbers of cards you win because of this card
+            let copiesWon = [];
+            let currentCardNo = (i + 1);
+            let nextCardNo = (i + 1)
+
+            for (let i = 0; i < (matches.length); i++) {
+                
+                copiesWon.push(nextCardNo + 1);
+                nextCardNo += 1;
+                
+            } 
+
+            console.log("Card no: " + currentCardNo + " wins you these " + copiesWon);
+
         } 
     }
 
