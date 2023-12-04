@@ -1,98 +1,80 @@
-//count how many characters in a line = this is a var
-//make array of location of all special characters - type / line no / location num
-//loop through to look for digits. Check their locations against symbol locations
-
-let charInLine = 10;
-//line breaks and white spaces removed already
+// Define the input string containing characters and symbols
 let input = "467..114.. ...*...... ..35..633. ......#... 617*...... .....+.58. ..592..... ......755. ...$.*.... .664.598..";
+
+// Array to store positions of characters: [character, line number, position number]
 let symbolPosition = [];
-let inputArr = input.split(" ")
-let adjacentNo;
 
+// Split the input string into an array of characters and symbols separated by spaces
+let inputArr = input.split(" ");
+
+// Array to store adjacent numbers found based on specific criteria
+let adjacentNumbers = [];
+
+// Function to find positions of characters in the input array
 function findSymbolPosition(arr) {
-    let lineNo;
-
     for (let i = 0; i < arr.length; i++) {
-        lineNo = i+1;
-
         for (let j = 0; j < arr[i].length; j++) {
-            let positionNo = j+1;
+            // Get line number and position number of each character
+            let lineNo = i + 1;
+            let positionNo = j + 1;
             let currentChar = arr[i][j];
+
+            // Store character position information in the symbolPosition array
             symbolPosition.push([currentChar, lineNo, positionNo]);
-        };
-    };
+        }
+    }
 }
 
+// Function to check for adjacent numbers based on specific conditions
 function checkSymbolPosition(arr) {
+    // Regular expression to identify special characters/symbols
     let specialCharsRegex = /[*@#$+%/&=-]/;
 
-    // loop through the symbolPosition array
     for (let i = 0; i < arr.length; i++) {
-
-        // for each one, check if it's a digit
+        // Check if the current character is a digit
         if (!isNaN(arr[i][0])) {
-            // console.log("Looping through: " + arr[i][0] + ", line: " + arr[i][1] + " position: " + arr[i][2])
-            
-            //If there's a var to the right & it's a symbol
-            //Add left / above / below here too?
-            if (((i+1) < arr.length) & specialCharsRegex.test(arr[i+1][0])) {
-                currentNumber = arr[i][0];
-                previousNumber = (arr[i - 1] && arr[i - 1][0] !== undefined) ? arr[i - 1][0] : NaN;
-                previousPreviousNumber = (arr[i - 2] && arr[i - 2][0] !== undefined) ? arr[i - 2][0] : NaN;
-                currentArr = arr[i];
-
-                // find full number it belongs to
-                // this is testing for right, so it will be the end number of a longer one
-
-                /////////// Write another loop here to account for numbers bigger than 3
-                adjacentNo = currentNumber; //push to this but add to the front
-
-                checkIfPreviousNoIsDigit(); //if digit, add to beginning of adjacentNo 
+            // Check if the next character is a special character/symbol
+            if (((i + 1) < arr.length) && specialCharsRegex.test(arr[i + 1][0])) {
+                // Initialise variables for current adjacent number
+                let currentNumber = arr[i][0];
                 let toMinus = 1;
+                let adjacentNo = currentNumber;
 
-                function checkIfPreviousNoIsDigit(toMinus) {
-                    if (!isNaN(arr[(i - toMinus)][0])) { //if it's a digit
-                        
-                        adjacentNo = arr[(i - toMinus)][0] + currentNumber;
-                        toMinus += 1; //add to toMinus for next round of checks
-                        checkIfPreviousNoIsDigit()
+                // Function to recursively check for previous digits in the sequence
+                toMinus = checkIfPreviousNoIsDigit(i, toMinus, arr, adjacentNo);
 
-                    } else {
-                        console.log("This is the full adjacentNo number: " + adjacentNo)
-                    }
-                }
-
-                
-                // save that number if it isn't a duplicate                              
-                
+                // Push the found adjacent number into the adjacentNumbers array
+                adjacentNumbers.push(adjacentNo);
             }
         }
-    };      
+    }
 }
 
-// function findFullNumberGoingLeft(currentNumber, previousNumber, previousPreviousNumber, currentArr) {
-//     console.log("current number is: " + currentNumber)
-//     console.log("previous number is: " + previousNumber)
-//     console.log("previous previous number is: " + previousPreviousNumber)
-//     console.log(currentArr)
+// Recursive function to check for previous digits in the sequence
+function checkIfPreviousNoIsDigit(i, toMinus, arr, adjacentNo) {
+    if (i - toMinus >= 0 && !isNaN(arr[i - toMinus][0])) {
+        // Concatenate previous digit to the current adjacent number
+        adjacentNo = arr[i - toMinus][0] + adjacentNo;
+        toMinus++;
+        return checkIfPreviousNoIsDigit(i, toMinus, arr, adjacentNo);
+    } else {
+        // Log the full adjacent number found
+        console.log("This is the full adjacentNo number: " + adjacentNo);
 
-//     let adjacentNo = "";
+        let toPush = [adjacentNo, arr[i][1], (arr[i][2] - (toMinus - 1))];
 
-//     // check if num is digit
-//     if (/^[0-9]*$/.test(previousPreviousNumber)) {
-//         adjacentNo += previousPreviousNumber;
-//     }
+        // Check before pushing if adjacentNumbers contains toPush
 
-//     if (/^[0-9]*$/.test(previousNumber)) {
-//         adjacentNo += previousNumber;
-//     }
 
-//     adjacentNo += currentNumber;
+        adjacentNumbers.push(toPush); // [whole number, line number, position number of first digit]
+        console.log("adjacentNumbers array is: " + adjacentNumbers);
 
-//     console.log("adjecentNo is: " + adjacentNo);
+    }
+}
 
-//     //check if digit is actually a number
-// }
+// Call function to find positions of characters in the input array
+findSymbolPosition(inputArr);
 
-findSymbolPosition(inputArr)
-checkSymbolPosition(symbolPosition)
+// Call function to check for adjacent numbers based on specific criteria
+checkSymbolPosition(symbolPosition);
+
