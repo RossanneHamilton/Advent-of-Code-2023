@@ -6,22 +6,20 @@ const dataArray = stringData.split(/Card \d+: /).slice(1).map(card => {
 });
 
 function findMatchingNumbers(cards) {
-    cards.forEach(card => {
+    for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
         const leftSide = card[0];
         const rightSide = card[1];
         
         const matches = rightSide.filter(num => leftSide.includes(num));
         
         if (matches.length > 0) {
-            // console.log(`Card matches numbers: ${matches.join(', ')}`);
             const score = calculateScore(matches.length);
-            // console.log(`Score for this card: ${score}`);
-            totalScore += score
-
+            totalScore += score;
         } else {
             console.log('No matches found for this card.');
         }
-    });
+    }
 
     console.log(totalScore);
 }
