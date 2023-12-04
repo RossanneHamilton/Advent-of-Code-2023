@@ -1,53 +1,72 @@
-//count how many characters in a line = this is a var
-//make array of location of all special characters - type / line no / location num
-//loop through to look for digits. Check their locations against symbol locations
-
-let charInLine = 10;
-//line breaks and white spaces removed already
+// Define the input string containing characters and symbols
 let input = "467..114.. ...*...... ..35..633. ......#... 617*...... .....+.58. ..592..... ......755. ...$.*.... .664.598..";
+
+// Array to store positions of characters: [character, line number, position number]
 let symbolPosition = [];
-let inputArr = input.split(" ")
 
+// Split the input string into an array of characters and symbols separated by spaces
+let inputArr = input.split(" ");
+
+// Array to store adjacent numbers found based on specific criteria
+let adjacentNumbers = [];
+
+// Function to find positions of characters in the input array
 function findSymbolPosition(arr) {
-    let lineNo;
-
     for (let i = 0; i < arr.length; i++) {
-        lineNo = i+1;
-
         for (let j = 0; j < arr[i].length; j++) {
-            let positionNo = j+1;
+            // Get line number and position number of each character
+            let lineNo = i + 1;
+            let positionNo = j + 1;
             let currentChar = arr[i][j];
+
+            // Store character position information in the symbolPosition array
             symbolPosition.push([currentChar, lineNo, positionNo]);
-        };
-    };
+        }
+    }
 }
 
+// Function to check for adjacent numbers based on specific conditions
 function checkSymbolPosition(arr) {
+    // Regular expression to identify special characters/symbols
     let specialCharsRegex = /[*@#$+%/&=-]/;
 
-    // loop through the symbolPosition array
     for (let i = 0; i < arr.length; i++) {
-
-        // for each one, check if it's a digit
+        // Check if the current character is a digit
         if (!isNaN(arr[i][0])) {
-            // console.log("Looping through: " + arr[i][0] + ", line: " + arr[i][1] + " position: " + arr[i][2])
-            
-            //Check if there's a var to the right & it's a symbol
-            if (((i+1) < arr.length) & specialCharsRegex.test(arr[i+1][0])) {
-                // rightVar = arr[i+1][0]
-                
-                // find full number it belongs to
-                
-                // save that number if it isn't a duplicate
-                                
-                
-            }
+            // Check if the next character is a special character/symbol
+            if (((i + 1) < arr.length) && specialCharsRegex.test(arr[i + 1][0])) {
+                // Initialise variables for current adjacent number
+                let currentNumber = arr[i][0];
+                let toMinus = 1;
+                let adjacentNo = currentNumber;
 
+                // Function to recursively check for previous digits in the sequence
+                toMinus = checkIfPreviousNoIsDigit(i, toMinus, arr, adjacentNo);
+
+                // Push the found adjacent number into the adjacentNumbers array
+                adjacentNumbers.push(adjacentNo);
+            }
         }
-        
-    };
-        
+    }
 }
 
-findSymbolPosition(inputArr)
-checkSymbolPosition(symbolPosition)
+// Recursive function to check for previous digits in the sequence
+function checkIfPreviousNoIsDigit(i, toMinus, arr, adjacentNo) {
+    if (i - toMinus >= 0 && !isNaN(arr[i - toMinus][0])) {
+        // Concatenate previous digit to the current adjacent number
+        adjacentNo = arr[i - toMinus][0] + adjacentNo;
+        toMinus++;
+        return checkIfPreviousNoIsDigit(i, toMinus, arr, adjacentNo);
+    } else {
+        // Log the full adjacent number found
+        console.log("This is the full adjacentNo number: " + adjacentNo);
+        return toMinus;
+    }
+}
+
+// Call function to find positions of characters in the input array
+findSymbolPosition(inputArr);
+
+// Call function to check for adjacent numbers based on specific criteria
+checkSymbolPosition(symbolPosition);
+
