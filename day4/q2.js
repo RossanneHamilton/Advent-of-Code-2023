@@ -28,6 +28,12 @@ function findMatchingNumbers(cards) {
             for (let i = 0; i < (matches.length); i++) {
                 
                 copiesWon.push(nextCardNo + 1);
+
+                //iterate through the cards won during this round
+                for (let i = 0; i < (matches.length); i++) {
+                    //CODE GOES HERE
+                }
+
                 nextCardNo += 1;
                 
             } 
