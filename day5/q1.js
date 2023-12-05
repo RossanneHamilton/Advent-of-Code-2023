@@ -7,27 +7,42 @@ const arrayWithoutColons = inputWithoutWords.split(': ');
 let stringsArray = arrayWithoutColons.slice(1);
 
 // Mapping each string to an array of numbers
-let result = stringsArray.map(str => str.trim().split(/\s+/).map(Number));
+let seedMapArr = stringsArray.map(str => str.trim().split(/\s+/).map(Number));
 
 // Process the arrays starting from the second one
-for (let i = 1; i < result.length; i++) {
-    const nestedArray = result[i];
+for (let i = 1; i < seedMapArr.length; i++) {
+    const nestedArray = seedMapArr[i];
     const groupedArrays = [];
     for (let j = 0; j < nestedArray.length; j += 3) {
         groupedArrays.push(nestedArray.slice(j, j + 3));
     }
-    result[i] = groupedArrays;
+    seedMapArr[i] = groupedArrays;
 }
 
-// Seeds = result[0]
-// seed-to-soil map: result[1]
-// soil-to-fertilizer map: result[2]
-// fertilizer-to-water map: result[3]
-// water-to-light map: result[4]
-// light-to-temperature map: result[5]
-// temperature-to-humidity map: result[6]
-// humidity-to-location map: result[7]
+// Seeds = seedMapArr[0]
+// seed-to-soil map: seedMapArr[1]
+// soil-to-fertilizer map: seedMapArr[2]
+// fertilizer-to-water map: seedMapArr[3]
+// water-to-light map: seedMapArr[4]
+// light-to-temperature map: seedMapArr[5]
+// temperature-to-humidity map: seedMapArr[6]
+// humidity-to-location map: seedMapArr[7]
 
+function findLowestLocation() {
 
-console.log(result);
+    // getting just seed numbers
+    const seedNums = seedMapArr[0];
+
+    // Looping through the numbers within [79,14,55,13]
+    for (let i = 0; i < seedNums.length; i++) {
+        let seed = seedNums[i];
+        getSoil(seed);
+    }
+}
+
+function getSoil(seed) {
+    console.log(seed)
+}
+
+findLowestLocation();
 
