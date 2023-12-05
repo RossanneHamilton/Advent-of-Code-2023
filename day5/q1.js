@@ -9,5 +9,25 @@ let stringsArray = arrayWithoutColons.slice(1);
 // Mapping each string to an array of numbers
 let result = stringsArray.map(str => str.trim().split(/\s+/).map(Number));
 
+// Process the arrays starting from the second one
+for (let i = 1; i < result.length; i++) {
+    const nestedArray = result[i];
+    const groupedArrays = [];
+    for (let j = 0; j < nestedArray.length; j += 3) {
+        groupedArrays.push(nestedArray.slice(j, j + 3));
+    }
+    result[i] = groupedArrays;
+}
+
+// Seeds = result[0]
+// seed-to-soil map: result[1]
+// soil-to-fertilizer map: result[2]
+// fertilizer-to-water map: result[3]
+// water-to-light map: result[4]
+// light-to-temperature map: result[5]
+// temperature-to-humidity map: result[6]
+// humidity-to-location map: result[7]
+
+
 console.log(result);
 
