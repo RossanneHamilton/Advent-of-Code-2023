@@ -16,8 +16,7 @@ const dataArray = stringData.split(/Card \d+: /).slice(1).map(card => {
 
 // Adds to the array, based on how many copies you get of each card
 function WonCard(currentCard,score) {
-    for(var i=1;i<score+1;i++)
-    {
+    for(var i=1;i<score+1;i++) {
         winnings[currentCard+i]++;
     }
 }
@@ -31,14 +30,13 @@ function findMatchingNumbers(cards) {
         const matches = rightSide.filter(num => leftSide.includes(num));
 
         // Will loop based on how many copies of the card you are on
-        for (var j = 0; j < winnings[i]; j++) {
+        for (let j = 0; j < winnings[i]; j++) {
 
             WonCard(i,matches.length);
             
         }
     }
 
-    console.log(totalScore);
     console.log("Total Cards: "+ winnings.reduce(function(prev,curr){
         return curr + prev;
     },0));
