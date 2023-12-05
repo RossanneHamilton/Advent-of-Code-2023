@@ -45,13 +45,28 @@ function getSoil(seed) {
     //loop through seed->soil map
     for (let i = 0; i < seedMapArr[1].length; i++) {
 
+        let destinationRangeStart = seedMapArr[1][i][0]
         let sourceRangeStart = seedMapArr[1][i][1];
-        console.log("sourceRangeStart: " + sourceRangeStart)
-
         let rangeLength = seedMapArr[1][i][2]
-        console.log("rangeLength: " + rangeLength)
-    }
 
+        calcMap(destinationRangeStart, sourceRangeStart, rangeLength);
+
+        function calcMap(destinationRangeStart, sourceRangeStart, rangeLength) {
+            let seedNumList = [sourceRangeStart];
+
+            //make seed num list
+            for (let i = 0; i < (rangeLength - 1); i++) {
+                sourceRangeStart += 1; // Increment sourceRangeStart directly
+                seedNumList.push(sourceRangeStart);
+            }
+        
+            console.log(seedNumList);
+        
+            //then check if the seed num we're looking at is in that list
+        
+            //if so, grab its soil num
+        }
+    }
 }
 
 findLowestLocation();
