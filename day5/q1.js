@@ -41,7 +41,17 @@ function findLowestLocation() {
 }
 
 function getSoil(seed) {
-    console.log(seed)
+
+    //loop through seed->soil map
+    for (let i = 0; i < seedMapArr[1].length; i++) {
+
+        let sourceRangeStart = seedMapArr[1][i][1];
+        console.log("sourceRangeStart: " + sourceRangeStart)
+
+        let rangeLength = seedMapArr[1][i][2]
+        console.log("rangeLength: " + rangeLength)
+    }
+
 }
 
 findLowestLocation();
