@@ -21,9 +21,13 @@ function beatRaces(races) {
 
         }
 
-        console.log("Time is: " + time);
-        console.log("countOfWaysToBeat is: " + countOfWaysToBeat);
+        answer *= countOfWaysToBeat;
+
+        // console.log("Time is: " + time);
+        // console.log("countOfWaysToBeat is: " + countOfWaysToBeat);
     }
+
+    console.log("answer is: " + answer)
 }
 
 beatRaces(races)
