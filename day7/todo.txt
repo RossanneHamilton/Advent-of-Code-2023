@@ -3,6 +3,7 @@
 // order by weakest to strongest hand
     // Check for type first. Higher types always win
         // Put each type in its own array. And then go through those arrays to determine weakest hands among them
+        
     // Then arrange each type array based on strength - check if it’s the same type, based on the individual cards
     // Then combine these arrays back to a big array - weakest to strongest. Using (index + 1) as the rank number
 

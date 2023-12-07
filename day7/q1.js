@@ -39,31 +39,31 @@ function sortByType(array) {
         switch (true) { // Use switch with true to check conditions
             case isFiveOfKind:
                 // console.log("five of kind: " + hand);
-                fiveOfKind.push(hand);
+                fiveOfKind.push([hand, array[i][1]]);
                 break;
             case hasFourOfSame:
                 // console.log("four of kind: " + hand);
-                fourOfkind.push(hand);
+                fourOfkind.push([hand, array[i][1]]);
                 break;
             case fullHouse:
                 // console.log("full house: " + hand);
-                fullHouseArr.push(hand);
+                fullHouseArr.push([hand, array[i][1]]);
                 break;
             case hasThreeOfSame:
                 // console.log("three of kind: " + hand);
-                threeOfKind.push(hand);
+                threeOfKind.push([hand, array[i][1]]);
                 break;
             case twoPair:
                 // console.log("two pair: " + hand);
-                pairsTwo.push(hand);
+                pairsTwo.push([hand, array[i][1]]);
                 break;
             case onePair:
                 // console.log("one pair: " + hand);
-                pairsOne.push(hand);
+                pairsOne.push([hand, array[i][1]]);
                 break;
             default:
                 // console.log("high card: " + hand);
-                highCard.push(hand);
+                highCard.push([hand, array[i][1]]);
                 break;
         }
     }
@@ -138,17 +138,31 @@ function hasTwoPairs(str) {
     return pairs === 2;
 }
 
+function sortByCardScore(array) {
+    // loop through each inner array
+    for (let i = 0; i < array.length; i++) {
+        let currentHand = array[i][0];
+
+        // loop through the hand string
+        for (let j = 0; j < currentHand.length; j++) {
+            let currentChar = currentHand[j];
+            console.log(currentChar);
+
+            // first check if this is the last hand in the array
+            // if not, use array[i+1] to compare
+        }
+    }
+}
+
 sortByType(parsedInput);
-console.log("fiveOfKind: " + fiveOfKind)
-console.log("fourOfkind: " + fourOfkind)
-console.log("fullHouse: " + fullHouseArr)
+sortByCardScore(threeOfKind);
+
+// console.log("fiveOfKind: " + fiveOfKind)
+// console.log("fourOfkind: " + fourOfkind)
+// console.log("fullHouse: " + fullHouseArr)
 console.log("threeOfKind: " + threeOfKind)
-console.log("twoPair: " + pairsTwo)
-console.log("onePair: " + pairsOne)
-console.log("highCard: " + highCard)
+// console.log("twoPair: " + pairsTwo)
+// console.log("onePair: " + pairsOne)
+// console.log("highCard: " + highCard)
 
 
-// get answer
-// iterate through all hands
-// answer *= rank
-// answer += bid
