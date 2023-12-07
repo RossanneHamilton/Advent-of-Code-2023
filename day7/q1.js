@@ -30,6 +30,7 @@ function sortByType(array) {
         let hand = array[i][0];
         let isFiveOfKind = hasXOfSame(hand, 5);
         let hasFourOfSame = hasXOfSame(hand, 4);
+        let fullHouse = isFullHouse(hand);
 
         // Check for type first. Higher types always win
         switch (true) { // Use switch with true to check conditions
@@ -38,6 +39,9 @@ function sortByType(array) {
                 break;
             case hasFourOfSame:
                 console.log("four of kind: " + hand);
+                break;
+            case fullHouse:
+                console.log("full house: " + hand);
                 break;
             default:
                 console.log("other: " + hand);
@@ -48,22 +52,41 @@ function sortByType(array) {
 
 function hasXOfSame(str, int) {
     const charCount = {}; // Object to store character counts
-  
+
     // Count occurrences of each character in the string
     for (let i = 0; i < str.length; i++) {
-      const char = str[i];
-      charCount[char] = (charCount[char] || 0) + 1; // Increment character count
+        const char = str[i];
+        charCount[char] = (charCount[char] || 0) + 1; // Increment character count
     }
-  
+
     // Check if any character occurs four times
     for (const char in charCount) {
-      if (charCount[char] >= int) {
-        return true; // Return true if a character occurs four or more times
-      }
+        if (charCount[char] >= int) {
+            console.log(charCount);
+            return true; // Return true if a character occurs four or more times
+        }
     }
-  
-    return false; // Return false if no character occurs four times
-  }
+
+    console.log(charCount);
+    return false; // Return false if no character occurs x times
+}
+
+function isFullHouse(str) {
+    const charCount = {}; // Object to store character counts
+
+    // Count occurrences of each character in the string
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        charCount[char] = (charCount[char] || 0) + 1; // Increment character count
+    }
+
+    const uniqueChars = Object.keys(charCount).length;
+    const values = Object.values(charCount);
+
+    // Return true if there are exactly two unique characters (3 of one and 2 of another)
+    return uniqueChars === 2 && (values.includes(3) && values.includes(2));
+}
+
 
 sortByType(parsedInput);
 
