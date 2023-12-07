@@ -2,10 +2,10 @@ const input = "32T3K 765 T55J5 684 KK677 28 KTJJT 220 QQQJA 483";
 const parsedInput = parseInput(input);
 let fiveOfKind = [];
 let fourOfkind = [];
-let fullHouse = [];
+let fullHouseArr = [];
 let threeOfKind = [];
-let twoPair = [];
-let onePair = [];
+let pairsTwo = [];
+let pairsOne = [];
 let highCard = [];
 
 // parse data
@@ -38,25 +38,32 @@ function sortByType(array) {
         // Check for type first. Higher types always win
         switch (true) { // Use switch with true to check conditions
             case isFiveOfKind:
-                console.log("five of kind: " + hand);
+                // console.log("five of kind: " + hand);
+                fiveOfKind.push(hand);
                 break;
             case hasFourOfSame:
-                console.log("four of kind: " + hand);
+                // console.log("four of kind: " + hand);
+                fourOfkind.push(hand);
                 break;
             case fullHouse:
-                console.log("full house: " + hand);
+                // console.log("full house: " + hand);
+                fullHouseArr.push(hand);
                 break;
             case hasThreeOfSame:
-                console.log("three of kind: " + hand);
+                // console.log("three of kind: " + hand);
+                threeOfKind.push(hand);
                 break;
             case twoPair:
-                console.log("two pair: " + hand);
+                // console.log("two pair: " + hand);
+                pairsTwo.push(hand);
                 break;
             case onePair:
-                console.log("one pair: " + hand);
+                // console.log("one pair: " + hand);
+                pairsOne.push(hand);
                 break;
             default:
-                console.log("other: " + hand);
+                // console.log("high card: " + hand);
+                highCard.push(hand);
                 break;
         }
     }
@@ -104,9 +111,10 @@ function findFullHouse(str, x, y) {
         }
     }
 
-    // Return true if there are exactly two characters appearing twice each (two pairs)
-    return countX === 2 && countY === 2;
+    // Return true if there is exactly one character appearing three times and one character appearing twice (full house)
+    return (countX === 1 && countY === 1);
 }
+
 
 function hasTwoPairs(str) {
     const charCount = {}; // Object to store character counts
@@ -131,6 +139,14 @@ function hasTwoPairs(str) {
 }
 
 sortByType(parsedInput);
+console.log("fiveOfKind: " + fiveOfKind)
+console.log("fourOfkind: " + fourOfkind)
+console.log("fullHouse: " + fullHouseArr)
+console.log("threeOfKind: " + threeOfKind)
+console.log("twoPair: " + pairsTwo)
+console.log("onePair: " + pairsOne)
+console.log("highCard: " + highCard)
+
 
 // get answer
 // iterate through all hands
