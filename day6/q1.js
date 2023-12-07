@@ -1,4 +1,4 @@
-const races = [[7,9],[15,40],[30,200]] //[time, distanceToBeat]
+const races = [[40709879,215105121471005]] //[time, distanceToBeat]
 let answer = 1;
 
 function beatRaces(races) {
