@@ -19,6 +19,8 @@ for (let i = 1; i < seedMapArr.length; i++) {
     seedMapArr[i] = groupedArrays;
 }
 
+console.log(seedMapArr)
+
 // Seeds = seedMapArr[0]
 // seed-to-soil map: seedMapArr[1]
 // soil-to-fertilizer map: seedMapArr[2]
@@ -49,24 +51,33 @@ function getSoil(seed) {
         let sourceRangeStart = seedMapArr[1][i][1];
         let rangeLength = seedMapArr[1][i][2]
 
-        calcMap(destinationRangeStart, sourceRangeStart, rangeLength);
+        let seedList = findSeeds(sourceRangeStart, rangeLength);
 
-        function calcMap(destinationRangeStart, sourceRangeStart, rangeLength) {
-            let seedNumList = [sourceRangeStart];
+        // console.log(seedList);
 
-            //make seed num list
-            for (let i = 0; i < (rangeLength - 1); i++) {
-                sourceRangeStart += 1; // Increment sourceRangeStart directly
-                seedNumList.push(sourceRangeStart);
-            }
-        
-            console.log(seedNumList);
-        
-            //then check if the seed num we're looking at is in that list
-        
-            //if so, grab its soil num
-        }
+        // // check if the seed is in the seedList
+        // if (seedList.includes(seed)) {
+        //     console.log(`Seed ${seed} found in the seedList.`);
+        //     // grab its soil num or perform any other action
+        // } else {
+        //     console.log(`Seed ${seed} not found in the seedList.`);
+        // }
+
+        //if so, grab its soil num
+
     }
+}
+
+function findSeeds(sourceRangeStart, rangeLength) {
+    let seedNumList = [sourceRangeStart];
+
+    //make seed num list
+    for (let i = 0; i < (rangeLength - 1); i++) {
+        sourceRangeStart += 1; // Increment sourceRangeStart directly
+        seedNumList.push(sourceRangeStart);
+    }
+
+    return seedNumList;
 }
 
 findLowestLocation();
