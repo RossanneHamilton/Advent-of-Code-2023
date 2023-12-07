@@ -1,4 +1,5 @@
-const races = [[7,9],[15,40],[30,200]] //[time, distance]
+const races = [[7,9],[15,40],[30,200]] //[time, distanceToBeat]
+let answer = 1;
 
 function beatRaces(races) {
 
@@ -6,6 +7,7 @@ function beatRaces(races) {
     for (let i = 0; i < races.length; i++) {
         let time = races[i][0];
         let distanceToBeat = races[i][1];
+        let countOfWaysToBeat = 0;
 
         // loop through each millisecond available to hold the button for in the race
         for (let i = 1; i < (time + 1); i++) {
@@ -13,11 +15,14 @@ function beatRaces(races) {
             let timeLeft = time - i;
             let distanceTravelled = buttonHeldFor * timeLeft;
 
-            console.log("Time is: " + time);
-            console.log("buttonHeldFor is: " + buttonHeldFor);
-            console.log("Time left is: " + timeLeft);
-            console.log("distanceTravelled is: " + distanceTravelled);
+            if (distanceTravelled > distanceToBeat) {
+                countOfWaysToBeat += 1;
+            }
+
         }
+
+        console.log("Time is: " + time);
+        console.log("countOfWaysToBeat is: " + countOfWaysToBeat);
     }
 }
 
