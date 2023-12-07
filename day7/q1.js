@@ -30,9 +30,10 @@ function sortByType(array) {
         let hand = array[i][0];
         let isFiveOfKind = hasXOfSame(hand, 5);
         let hasFourOfSame = hasXOfSame(hand, 4);
-        let fullHouse = fullHouseOrTwoPair(hand, 3, 2);
+        let fullHouse = findFullHouse(hand, 3, 2);
         let hasThreeOfSame = hasXOfSame(hand, 3);
-        let twoPair = fullHouseOrTwoPair(hand, 2, 2);
+        let twoPair = hasTwoPairs(hand);
+        let onePair = hasXOfSame(hand, 2);
 
         // Check for type first. Higher types always win
         switch (true) { // Use switch with true to check conditions
@@ -50,6 +51,9 @@ function sortByType(array) {
                 break;
             case twoPair:
                 console.log("two pair: " + hand);
+                break;
+            case onePair:
+                console.log("one pair: " + hand);
                 break;
             default:
                 console.log("other: " + hand);
@@ -70,16 +74,16 @@ function hasXOfSame(str, int) {
     // Check if any character occurs four times
     for (const char in charCount) {
         if (charCount[char] >= int) {
-            console.log(charCount);
+            // console.log(charCount);
             return true; // Return true if a character occurs four or more times
         }
     }
 
-    console.log(charCount);
+    // console.log(charCount);
     return false; // Return false if no character occurs x times
 }
 
-function fullHouseOrTwoPair(str, x, y) {
+function findFullHouse(str, x, y) {
     const charCount = {}; // Object to store character counts
 
     // Count occurrences of each character in the string
@@ -88,13 +92,43 @@ function fullHouseOrTwoPair(str, x, y) {
         charCount[char] = (charCount[char] || 0) + 1; // Increment character count
     }
 
-    const uniqueChars = Object.keys(charCount).length;
-    const values = Object.values(charCount);
+    let countX = 0; // Count of characters appearing x times
+    let countY = 0; // Count of characters appearing y times
 
-    // Return true if there are exactly two unique characters (3 of one and 2 of another)
-    return uniqueChars === 2 && (values.includes(x) && values.includes(y));
+    // Count characters appearing x and y times
+    for (const char in charCount) {
+        if (charCount[char] === x) {
+            countX++;
+        } else if (charCount[char] === y) {
+            countY++;
+        }
+    }
+
+    // Return true if there are exactly two characters appearing twice each (two pairs)
+    return countX === 2 && countY === 2;
 }
 
+function hasTwoPairs(str) {
+    const charCount = {}; // Object to store character counts
+
+    // Count occurrences of each character in the string
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        charCount[char] = (charCount[char] || 0) + 1; // Increment character count
+    }
+
+    let pairs = 0;
+
+    // Count characters appearing twice
+    for (const char in charCount) {
+        if (charCount[char] === 2) {
+            pairs++;
+        }
+    }
+
+    // Return true if there are exactly two characters appearing twice each (two pairs)
+    return pairs === 2;
+}
 
 sortByType(parsedInput);
 
