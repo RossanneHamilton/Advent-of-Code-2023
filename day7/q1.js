@@ -30,7 +30,9 @@ function sortByType(array) {
         let hand = array[i][0];
         let isFiveOfKind = hasXOfSame(hand, 5);
         let hasFourOfSame = hasXOfSame(hand, 4);
-        let fullHouse = isFullHouse(hand);
+        let fullHouse = fullHouseOrTwoPair(hand, 3, 2);
+        let hasThreeOfSame = hasXOfSame(hand, 3);
+        let twoPair = fullHouseOrTwoPair(hand, 2, 2);
 
         // Check for type first. Higher types always win
         switch (true) { // Use switch with true to check conditions
@@ -42,6 +44,12 @@ function sortByType(array) {
                 break;
             case fullHouse:
                 console.log("full house: " + hand);
+                break;
+            case hasThreeOfSame:
+                console.log("three of kind: " + hand);
+                break;
+            case twoPair:
+                console.log("two pair: " + hand);
                 break;
             default:
                 console.log("other: " + hand);
@@ -71,7 +79,7 @@ function hasXOfSame(str, int) {
     return false; // Return false if no character occurs x times
 }
 
-function isFullHouse(str) {
+function fullHouseOrTwoPair(str, x, y) {
     const charCount = {}; // Object to store character counts
 
     // Count occurrences of each character in the string
@@ -84,7 +92,7 @@ function isFullHouse(str) {
     const values = Object.values(charCount);
 
     // Return true if there are exactly two unique characters (3 of one and 2 of another)
-    return uniqueChars === 2 && (values.includes(3) && values.includes(2));
+    return uniqueChars === 2 && (values.includes(x) && values.includes(y));
 }
 
 
