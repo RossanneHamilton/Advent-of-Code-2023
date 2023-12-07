@@ -151,13 +151,28 @@ function sortByCardScore(array) {
             let nextHand = array[i + 1] ? array[i + 1][0] : null; // Check if there's a next hand
 
             if (nextHand) {
-                console.log("Next hand is:", nextHand);
-                console.log("Next hand's char is:", nextHand[j]);
-
                 // Compare currentChar with characters in nextHand here
                 let charToCompare = nextHand[j];
+                compareChars(currentChar, charToCompare)
             } 
         }
+    }
+}
+
+function compareChars(char1, char2) {
+    const rankOrder = "23456789TJQKA"; // Define the order of ranks
+    const rank1 = rankOrder.indexOf(char1); // Get the index of char1 in the rank order
+    const rank2 = rankOrder.indexOf(char2); // Get the index of char2 in the rank order
+
+    if (rank1 > rank2) {
+        // return `${char1} has a higher score than ${char2}`;
+        console.log(char1 + " is higher than " + char2)
+    } else if (rank1 < rank2) {
+        // return `${char2} has a higher score than ${char1}`;
+        console.log(char1 + " is lower than " + char2)
+    } else {
+        // return `${char1} and ${char2} have the same score`;
+        console.log(char1 + " is the same as " + char2)
     }
 }
 
