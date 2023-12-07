@@ -140,19 +140,27 @@ function hasTwoPairs(str) {
 
 function sortByCardScore(array) {
     // loop through each inner array
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) { // Updated loop condition to avoid accessing undefined index
         let currentHand = array[i][0];
+        console.log("Current Hand:", currentHand);
 
         // loop through the hand string
         for (let j = 0; j < currentHand.length; j++) {
             let currentChar = currentHand[j];
-            console.log(currentChar);
+            // console.log("Current Char:", currentChar);
+            let nextHand = array[i + 1] ? array[i + 1][0] : null; // Check if there's a next hand
 
-            // first check if this is the last hand in the array
-            // if not, use array[i+1] to compare
+            if (nextHand) {
+                console.log("Next hand is:", nextHand);
+                console.log("Next hand's char is:", nextHand[j]);
+
+                // Compare currentChar with characters in nextHand here
+                let charToCompare = nextHand[j];
+            } 
         }
     }
 }
+
 
 sortByType(parsedInput);
 sortByCardScore(threeOfKind);
