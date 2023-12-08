@@ -7,6 +7,7 @@ let threeOfKind = [];
 let pairsTwo = [];
 let pairsOne = [];
 let highCard = [];
+let handsWithScores = []; // Create a new array to hold hands with their scores
 
 // parse data
 function parseInput(inputString) {
@@ -144,27 +145,29 @@ function scoreChar(char) {
 }
 
 function sortByCardScore(array) {
+
     for (let i = 0; i < array.length; i++) {
         let currentHand = array[i][0];
-        console.log("Current Hand:", currentHand);
         let scores = []; // Array to store scores for each character in the hand
 
         for (let j = 0; j < currentHand.length; j++) {
             let currentChar = currentHand[j];
             let score = scoreChar(currentChar);
-            console.log("Current hand: " + currentHand + " currentChar: " + currentChar + " score: " + score)
             scores.push(score);
         }
 
-        console.log("Scores for hand:", scores);
-        // Now 'scores' contains the scores for each character in the current hand
-        // You can proceed with comparing these scores as needed
+        let handWithScore = [currentHand, scores]; // Store hand along with its scores
+        handsWithScores.push(handWithScore); // Push this combination into the new array
     }
+
+    return handsWithScores; // Return the new array containing hands with their scores
 }
+
 
 
 sortByType(parsedInput);
 sortByCardScore(threeOfKind);
+console.log(handsWithScores);
 
 // console.log("fiveOfKind: " + fiveOfKind)
 // console.log("fourOfkind: " + fourOfkind)
