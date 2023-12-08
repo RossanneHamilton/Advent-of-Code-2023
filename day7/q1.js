@@ -1,10 +1,5 @@
-// Input string containing hands
 const input = "32T3K 765 T55J5 684 KK677 28 KTJJT 220 QQQJA 483";
-
-// Parse the input string to create an array of arrays [hand, value]
 const parsedInput = parseInput(input);
-
-// Arrays to store different types of hands
 let fiveOfKind = [];
 let fourOfkind = [];
 let fullHouseArr = [];
@@ -13,12 +8,11 @@ let pairsTwo = [];
 let pairsOne = [];
 let highCard = [];
 
-// Parse the input data into an array of arrays [[hand, value], ...]
+// parse data
 function parseInput(inputString) {
-    // Use regex to match the desired pattern (a string followed by a space and then a number)
-    const regex = /(\w+\s\d+)/g;
+    const regex = /(\w+\s\d+)/g; // Use regex to match the desired pattern (a string followed by a space and then a number)
     const matches = inputString.match(regex);
-    const resultArray = matches.map(match => {
+    const resultArray = matches.map(match => { // Process matches to create the array of arrays
         const [str, num] = match.split(' ');
         return [str, parseInt(num)];
     });
@@ -26,7 +20,11 @@ function parseInput(inputString) {
     return resultArray;
 }
 
-// Categorise hands into different arrays based on their type
+// Put each type in its own array. And then go through those arrays to determine weakest hands among them
+// Then arrange each type array based on strength - check if it’s the same type, based on the individual cards
+// Then combine these arrays back to a big array - weakest to strongest. Using (index + 1) as the rank number
+
+// order by weakest to strongest hand
 function sortByType(array) {
     for (let i = 0; i < array.length; i++) {
         let hand = array[i][0];
@@ -37,61 +35,74 @@ function sortByType(array) {
         let twoPair = hasTwoPairs(hand);
         let onePair = hasXOfSame(hand, 2);
 
-        // Check for hand type
-        switch (true) {
+        // Check for type first. Higher types always win
+        switch (true) { // Use switch with true to check conditions
             case isFiveOfKind:
+                // console.log("five of kind: " + hand);
                 fiveOfKind.push([hand, array[i][1]]);
                 break;
             case hasFourOfSame:
+                // console.log("four of kind: " + hand);
                 fourOfkind.push([hand, array[i][1]]);
                 break;
             case fullHouse:
+                // console.log("full house: " + hand);
                 fullHouseArr.push([hand, array[i][1]]);
                 break;
             case hasThreeOfSame:
+                // console.log("three of kind: " + hand);
                 threeOfKind.push([hand, array[i][1]]);
                 break;
             case twoPair:
+                // console.log("two pair: " + hand);
                 pairsTwo.push([hand, array[i][1]]);
                 break;
             case onePair:
+                // console.log("one pair: " + hand);
                 pairsOne.push([hand, array[i][1]]);
                 break;
             default:
+                // console.log("high card: " + hand);
                 highCard.push([hand, array[i][1]]);
                 break;
         }
     }
 }
 
-// Check if a hand has x of the same character
 function hasXOfSame(str, int) {
-    const charCount = {};
+    const charCount = {}; // Object to store character counts
+
+    // Count occurrences of each character in the string
     for (let i = 0; i < str.length; i++) {
         const char = str[i];
-        charCount[char] = (charCount[char] || 0) + 1;
+        charCount[char] = (charCount[char] || 0) + 1; // Increment character count
     }
 
+    // Check if any character occurs four times
     for (const char in charCount) {
         if (charCount[char] >= int) {
-            return true;
+            // console.log(charCount);
+            return true; // Return true if a character occurs four or more times
         }
     }
 
-    return false;
+    // console.log(charCount);
+    return false; // Return false if no character occurs x times
 }
 
-// Check if a hand has a full house
 function findFullHouse(str, x, y) {
-    const charCount = {};
+    const charCount = {}; // Object to store character counts
+
+    // Count occurrences of each character in the string
     for (let i = 0; i < str.length; i++) {
         const char = str[i];
-        charCount[char] = (charCount[char] || 0) + 1;
+        charCount[char] = (charCount[char] || 0) + 1; // Increment character count
     }
 
-    let countX = 0;
-    let countY = 0;
+    let countX = 0; // Count of characters appearing x times
+    let countY = 0; // Count of characters appearing y times
 
+    // Count characters appearing x and y times
     for (const char in charCount) {
         if (charCount[char] === x) {
             countX++;
@@ -100,82 +111,65 @@ function findFullHouse(str, x, y) {
         }
     }
 
-    return countX === 1 && countY === 1;
+    // Return true if there is exactly one character appearing three times and one character appearing twice (full house)
+    return (countX === 1 && countY === 1);
 }
 
-// Check if a hand has two pairs
+
 function hasTwoPairs(str) {
-    const charCount = {};
+    const charCount = {}; // Object to store character counts
+
+    // Count occurrences of each character in the string
     for (let i = 0; i < str.length; i++) {
         const char = str[i];
-        charCount[char] = (charCount[char] || 0) + 1;
+        charCount[char] = (charCount[char] || 0) + 1; // Increment character count
     }
 
     let pairs = 0;
+
+    // Count characters appearing twice
     for (const char in charCount) {
         if (charCount[char] === 2) {
             pairs++;
         }
     }
 
+    // Return true if there are exactly two characters appearing twice each (two pairs)
     return pairs === 2;
 }
 
-// Sort the hands within each category based on the winning order
-function sortByWinningHands(array) {
-    let sortedHands = [...array];
+function scoreChar(char) {
+    const rankOrder = "23456789TJQKA";
+    return rankOrder.indexOf(char) + 1; // Return the index of the character plus 1 as the score
+}
 
-    for (let i = 0; i < sortedHands.length - 1; i++) {
-        let currentHand = sortedHands[i][0];
-        let nextHand = sortedHands[i + 1][0];
+function sortByCardScore(array) {
+    for (let i = 0; i < array.length; i++) {
+        let currentHand = array[i][0];
+        console.log("Current Hand:", currentHand);
+        let scores = []; // Array to store scores for each character in the hand
 
         for (let j = 0; j < currentHand.length; j++) {
             let currentChar = currentHand[j];
-            let nextChar = nextHand[j];
-
-            let isHigher = compareChars(currentChar, nextChar);
-
-            if (isHigher) {
-                let temp = sortedHands[i];
-                sortedHands[i] = sortedHands[i + 1];
-                sortedHands[i + 1] = temp;
-                break;
-            } else if (!isHigher && j === currentHand.length - 1) {
-                break;
-            }
+            let score = scoreChar(currentChar);
+            console.log("Current hand: " + currentHand + " currentChar: " + currentChar + " score: " + score)
+            scores.push(score);
         }
+
+        console.log("Scores for hand:", scores);
+        // Now 'scores' contains the scores for each character in the current hand
+        // You can proceed with comparing these scores as needed
     }
-
-    return sortedHands;
 }
 
-// Compare characters based on their rank order
-function compareChars(char1, char2) {
-    const rankOrder = "23456789TJQKA";
-    const rank1 = rankOrder.indexOf(char1);
-    const rank2 = rankOrder.indexOf(char2);
 
-    return rank1 > rank2;
-}
-
-// Categorise the hands
 sortByType(parsedInput);
+sortByCardScore(threeOfKind);
 
-// Sort each category based on winning order
-fiveOfKind = sortByWinningHands(fiveOfKind);
-fourOfkind = sortByWinningHands(fourOfkind);
-fullHouseArr = sortByWinningHands(fullHouseArr);
-threeOfKind = sortByWinningHands(threeOfKind);
-pairsTwo = sortByWinningHands(pairsTwo);
-pairsOne = sortByWinningHands(pairsOne);
-highCard = sortByWinningHands(highCard);
-
-// Print sorted hands based on winning order for each category
-console.log("Sorted hands based on winning order:");
-console.log("Five of a Kind:", fiveOfKind);
-console.log("Four of a Kind:", fourOfkind);
-console.log("Full House:", fullHouseArr);
-console.log("Three of a Kind:", threeOfKind);
-console.log("Two Pairs:", pairsTwo);
-console.log("One Pair:", pairsOne);
-console.log("High Card:", highCard);
+// console.log("fiveOfKind: " + fiveOfKind)
+// console.log("fourOfkind: " + fourOfkind)
+// console.log("fullHouse: " + fullHouseArr)
+console.log("threeOfKind: " + threeOfKind)
+// console.log("twoPair: " + pairsTwo)
+// console.log("onePair: " + pairsOne)
+// console.log("highCard: " + highCard)
