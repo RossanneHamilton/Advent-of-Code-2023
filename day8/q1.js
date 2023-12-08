@@ -1,5 +1,5 @@
 const input = "LLR AAA = (BBB, BBB) BBB = (AAA, ZZZ) ZZZ = (ZZZ, ZZZ)";
-const transformed = transformString(input);
+const inputArr = transformString(input);
 
 function transformString(input) {
     const regex = /(\w+)\s*=\s*\(([\w\s,]+)\)/g;
@@ -24,4 +24,30 @@ function transformString(input) {
     return nestedArray;
 }
 
-console.log(transformed);
+function howManySteps(array) {
+    const leftOrRight = array[0];
+    let currentPosition = "AAA";
+    
+    // loop through the chars in leftOrRight
+    for (let i = 0; i < array[0].length; i++) {
+        console.log("currentPosition is: " + currentPosition)
+        console.log("Direction is: " + array[0][i])
+
+        // find currentPosition in array - first instance of currentPosition in array
+        console.log("AAA is here: " + array[1][0][0])
+        let indexOfCurrentPosition = array.indexOf(currentPosition)
+        console.log("index of currentPosition is here: " + indexOfCurrentPosition)
+
+        // let left = 
+        // console.log("left is: " + left)
+        // let newPosition;
+
+
+
+
+        //if still haven't found zzz, loop through chars in leftOrRight again
+    }
+}
+
+console.log(inputArr);
+howManySteps(inputArr)
